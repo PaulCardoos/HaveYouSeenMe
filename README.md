@@ -1,4 +1,4 @@
-<h3>Technologies So far... <h3> 
+<h3>Technologies So far... </h3> 
 <ul> 
   <li>Python 3.9</li> 
   <li>Selenium</li> 
