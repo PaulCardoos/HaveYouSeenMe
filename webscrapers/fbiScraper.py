@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from Connect import connect
 
 #may need header to avoid recaptcha in some cases
 
@@ -57,7 +58,6 @@ class FbiScraper:
         except: 
             pass
 
-
         try:
             summary = html.find("p", attrs={"class" : "summary"})
 
@@ -72,7 +72,6 @@ class FbiScraper:
             missingPersons["locationMissing"] = locationMissing
         except:
             pass
-        
         
         descriptionTable = html.find("tbody")
         #get a list of the elements in the table
@@ -100,7 +99,6 @@ class FbiScraper:
         image = html.find("div" , attrs={"class":"lightbox-content"}).find("img").attrs.get("src")
         missingPersons["image"] = image 
       
-
         #add dictionary to list to set up for dumps
         self.missingPersons.append(missingPersons)
        
@@ -108,14 +106,12 @@ class FbiScraper:
         for person in self.people:
             self.getMissingPersonInfo(self.people[person])
         
-    
     def writeJsonToFile(self):
         print(self.missingPersons)
         jString = json.dumps(self.missingPersons)
         with open("missing-person.json", "w") as jsonFile:
             jsonFile.write(jString)
 
-    
     def run(self):
         #the three is to go three pages deep
         self.getMissingNames(3)
