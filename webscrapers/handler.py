@@ -10,7 +10,17 @@ def getKidInformation(driver):
     #get the name of the missing child 
     try:
         missingChildName = soup.find("h3").get_text(strip=True)
-        missingPerson["name"] = missingChildName
+        print(missingChildName)
+        name = missingChildName.split(" ")
+        #split the first name and the last name for easier quesries
+        missingPerson["firstName"] = name[0]
+        #remove first and last name
+        name.remove(name[0])
+        missingPerson["lastName"] = name[-1]
+        name.remove(name[-1])
+        #check for middle name
+        if(len(name) > 0):
+            missingPerson["middleName"] = (" ").join(name)
     except:
         pass
     
@@ -25,7 +35,7 @@ def getKidInformation(driver):
     try: 
         missing = soup.find("li", {"class" : "missingDate"})
         dates = missing.find_all("li")
-        missingPerson[dates[0].get_text()] = dates[1].get_text()
+        missingPerson["missingSince"] = dates[1].get_text()
     except: 
         pass
 
@@ -33,7 +43,7 @@ def getKidInformation(driver):
     try: 
         missing = soup.find("li", {"class" : "missingLocation"})
         locations = missing.find_all("li")
-        missingPerson[locations[0].get_text()] = locations[1].get_text()
+        missingPerson["missingFrom"] = locations[1].get_text()
     except: 
         pass
 
@@ -41,7 +51,7 @@ def getKidInformation(driver):
     try: 
         missing = soup.find("li", {"class" : "ageNow"})
         ages = missing.find_all("li")
-        missingPerson[ages[0].get_text()] = ages[1].get_text()
+        missingPerson["ageNow"] = ages[1].get_text()
     except: 
         pass
     
@@ -49,7 +59,7 @@ def getKidInformation(driver):
     try:     
         missing = soup.find("li", {"class" : "sex"})
         sexes = missing.find_all("li")
-        missingPerson[sexes[0].get_text()] = sexes[1].get_text()
+        missingPerson[sexes[0].get_text().lower()] = sexes[1].get_text()
     except: 
         pass
 
@@ -57,7 +67,7 @@ def getKidInformation(driver):
     try: 
         missing = soup.find("li", {"class" : "race"})
         races = missing.find_all("li")
-        missingPerson[races[0].get_text()] = races[1].get_text()
+        missingPerson[races[0].get_text().lower()] = races[1].get_text()
     except: 
         pass
 
@@ -73,7 +83,7 @@ def getKidInformation(driver):
     try:
         missing = soup.find("li", {"class" : "eyeColor"})
         eyeColors = missing.find_all("li")
-        missingPerson[eyeColors[0].get_text()] = eyeColors[1].get_text()
+        missingPerson["eyeColor"] = eyeColors[1].get_text()
     except: 
         pass
 
@@ -81,7 +91,7 @@ def getKidInformation(driver):
     try: 
         missing = soup.find("li", {"class" : "height"})
         heights = missing.find_all("li")
-        missingPerson[heights[0].get_text()] = heights[1].get_text()
+        missingPerson[heights[0].get_text().lower()] = heights[1].get_text()
     except: 
         pass
 
@@ -89,7 +99,7 @@ def getKidInformation(driver):
     try:
         missing = soup.find("li", {"class" : "weight"})
         weights = missing.find_all("li")
-        missingPerson[weights[0].get_text()] = weights[1].get_text()
+        missingPerson[weights[0].get_text().lower()] = weights[1].get_text()
     except: 
         pass
 
@@ -100,6 +110,6 @@ def getKidInformation(driver):
         missingPerson["details"] = details
     except: 
         pass
-    print(missingPerson)
+    
     return missingPerson
 

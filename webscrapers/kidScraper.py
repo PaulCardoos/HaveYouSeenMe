@@ -31,21 +31,24 @@ class missingKidScraper:
 
     def scrape(self):
         for person in self.childrenNames:
-            posters = self.driver.find_element_by_link_text(person)
-            posters.click()
-            #save the main page
-            main_window = self.driver.current_window_handle
-            #put focus on neew tab open which has poster of missing child
-            self.driver.switch_to.window(self.driver.window_handles[1])
-            #sleep for a second and wait for the page to load
-            time.sleep(3)
-            #get kid information returns a dict
-            missingKid = getKidInformation(self.driver)
-            collection.insert_one(missingKid) 
-            #close the current page that we are focused on
-            self.driver.close()
-            #switch back to main page
-            self.driver.switch_to_window(main_window)
+            try:
+                posters = self.driver.find_element_by_link_text(person)
+                posters.click()
+                #save the main page
+                main_window = self.driver.current_window_handle
+                #put focus on neew tab open which has poster of missing child
+                self.driver.switch_to.window(self.driver.window_handles[1])
+                #sleep for a second and wait for the page to load
+                time.sleep(3)
+                #get kid information returns a dict
+                missingKid = getKidInformation(self.driver)
+                collection.insert_one(missingKid) 
+                #close the current page that we are focused on
+                self.driver.close()
+                #switch back to main page
+                self.driver.switch_to.window(main_window)
+            except:
+                pass
 
     def getNames(self):
         #this function is just responsible for scraping the names off the page
@@ -59,14 +62,16 @@ class missingKidScraper:
             pass
 
     def switchPages(self):
-        
-        self.pageNumber += 1
+        try:
+            self.pageNumber += 1
 
-        #this function is strictly responsible for handling the pagination
-        l = self.driver.find_element_by_link_text(">")
-        l.click()
-        self.childrenNames = []
-
+            #this function is strictly responsible for handling the pagination
+            l = self.driver.find_element_by_link_text(">")
+            l.click()
+            self.childrenNames = []
+        except:
+            pass
+            
     def getKidInformation(self, driver):
         soup = BeautifulSoup(driver.page_source, features="html.parser")
         soup.find_element_by_class_name()
@@ -75,9 +80,13 @@ class missingKidScraper:
         self.open()
         #need to find a way to make this more dynamic
         for i in range(0, 253):
-            self.getNames()
-            self.scrape()
-            self.switchPages()
+            try:
+                self.getNames()
+                self.scrape()
+                self.switchPages()
+                print(self.pageNumber)
+            except:
+                pass
 
 
 if __name__ == "__main__":
