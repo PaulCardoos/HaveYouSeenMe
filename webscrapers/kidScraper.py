@@ -17,7 +17,7 @@ class missingKidScraper:
         self.url = url
         self.missingChildren = {}
         self.childrenNames = []
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         self.driver.get(self.url)
         #keep track of page number incase code breaks so we dont have to start from the beginning
         self.pageNumber = 0
