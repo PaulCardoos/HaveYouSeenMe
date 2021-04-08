@@ -3,6 +3,12 @@
   <li>Python 3.9</li> 
   <li>Selenium</li> 
   <li>Beautiful Soup 4</li>
+  <li>Node v14.16.1 </li>
+  <li>Express</li>
+  <li>Mongo DB</li>
+  <li>Mongoose</li>
+  <li>dotenv</li>
+  
 </ul>
 
 <h3>Introduction</h3>
