@@ -1,25 +1,31 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import {Connect} from "./connect.js"
-import MissingPerson from './models/missingPersonModel.js'
 import searchRoutes from './routes/searchRoutes.js'
+
+//can refer to documentations https://expressjs.com/
 const app = express()
-
 dotenv.config()
-
 Connect()
+
+//this api will be used to search for individuals
 app.use('/api/v1/search', searchRoutes)
 
+// for parsing application/json
+app.use(express.json())
+
+// for parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true })) 
+
+//test route
 app.get('/', (req, res) => {
-    res.send("this is money")
+    res.send("testing")
 })
 
-app.get('/', async (req, res) => {
-    //test route for now 
-    const record = await MissingPerson.find({firstName : "Paul"})
-    res.send(record)
+//barebones error handler
+app.use((err, req, res, next) => {
+    res.send("error")
 })
-
 
 app.listen(3000, () => {
     console.log("listening on port 3000")

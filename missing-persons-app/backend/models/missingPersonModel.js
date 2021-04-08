@@ -6,6 +6,8 @@ const missingPersonSchema = new Schema({
     image: {type: String},
     missingSince: {type: String},
     missingFrom:{type: String},
+    city: {type: String},
+    state: {type: String},
     ageNow:{type: Number},
     sex:{type: String},
     race:{type: String},

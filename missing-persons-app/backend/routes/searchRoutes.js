@@ -3,10 +3,11 @@ import MissingPerson from '../models/missingPersonModel.js'
 const router = express.Router()
 
 
-router.get('/', async (req, res) => {
-    const kid = await MissingPerson.findOne({missingFrom : "Boston, MA"})
-    console.log(kid)
-    res.send(kid)
+router.get('/:state', async (req, res) => {
+    let { state } = req.params
+    let st = " " + state
+    let kids = await MissingPerson.find({state : st})
+    res.send(kids)
 })
 
 export default router
