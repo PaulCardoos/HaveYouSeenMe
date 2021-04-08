@@ -1,8 +1,8 @@
-import { Schema } from 'mongoose';
-
-
+import mongoose from 'mongoose';
+const {Schema} = mongoose
 const missingPersonSchema = new Schema({
-    name:{type: String},
+    firstName:{type: String},
+    lastName: {type : String},
     image: {type: String},
     missingSince: {type: String},
     missingFrom:{type: String},
@@ -18,6 +18,6 @@ const missingPersonSchema = new Schema({
     {collection: 'missingKids'})
 
 
-const MissingPerson = mongoose.model('MissingPerson', userSchema)
+const MissingPerson = mongoose.model('MissingPerson', missingPersonSchema, 'missingKids')
 
 export default MissingPerson

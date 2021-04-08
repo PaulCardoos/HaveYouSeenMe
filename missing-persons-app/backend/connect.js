@@ -1,13 +1,17 @@
-import mongo from 'mongodb'
-const {MongoClient} = mongo
+import mongoose from 'mongoose'
+
 
 
 export const Connect = async () => {
-    let client = new MongoClient(process.env.MONGO_URI, {useUnifiedTopology: true, useNewUrlParser: true})
-    client = await client.connect()
-    const db = await client.db(process.env.DB)
-    const collection = await db.collection(process.env.COLLECTION)
-    const kid = await collection.findOne({name: "Alona Allen-Barnes"})
-    console.log(kid)
+   try{
+       const connection = await mongoose.connect(process.env.MONGO_URI, {
+           useNewUrlParser : true,
+           useUnifiedTopology : true,
+           useCreateIndex : true
+       })
 
+       console.log("Mongo DB connected")
+   } catch (error) {
+       console.log("connection failed")
+   }
 }
