@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //test route
 app.get('/', (req, res) => {
-    res.send("testing")
+    res.send("sorry")
 })
 
 //barebones error handler
@@ -27,7 +27,9 @@ app.use((err, req, res, next) => {
     res.send("error")
 })
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, () => {
     console.log("listening on port 3000")
 })
 
